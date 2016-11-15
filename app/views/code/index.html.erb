@@ -1,0 +1,14 @@
+<h1 align="center">Code:</h1>
+<div align="center">
+  <% if flash[:error] %>
+      <p>
+        <%= flash[:error] %>
+      </p>
+  <% end %>
+  <%= form_tag(root_path, method: 'post') do %>
+      <p>
+        <%= text_area_tag 'code', nil, size: '100x30' %><br>
+        <%= submit_tag 'Run' %>
+      </p>
+  <% end %>
+</div>
