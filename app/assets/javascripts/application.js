@@ -9,8 +9,30 @@
 //
 // Read Sprockets README (https://github.com/rails/sprockets#sprockets-directives) for details
 // about supported directives.
-//
 //= require jquery
 //= require jquery_ujs
 //= require turbolinks
 //= require_tree .
+
+//= require codemirror
+//= require codemirror/modes/xml
+//= require codemirror/modes/javascript
+//= require codemirror/modes/htmlmixed
+//= require codemirror/modes/clike
+
+window.codemirror_editor = {};
+
+$(function() {
+    $('#code_editor').each(function(){
+        var $el = $(this);
+
+        codemirror_editor[$el.attr('id')] = CodeMirror.fromTextArea($el[0],
+            {
+                mode: "text/x-c++src",
+                tabMode: "indent",
+                textWrapping: false,
+                lineNumbers: true
+            });
+    });
+});
+

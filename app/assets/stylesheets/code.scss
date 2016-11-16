@@ -1,3 +1,19 @@
-// Place all the styles related to the Code controller here.
-// They will automatically be included in application.css.
-// You can use Sass (SCSS) here: http://sass-lang.com/
+.CodeMirror {
+  height: 400px;
+}
+
+.left {
+  float: left;
+  width: 67%;
+  margin-left: 3%;
+}
+
+.right {
+  float: right;
+  width: 29%;
+  padding-left: 1%;
+}
+
+.similar_width_code_area {
+  width: 170px;
+}
