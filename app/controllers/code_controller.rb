@@ -7,6 +7,7 @@ class CodeController < ApplicationController
   # index action
   def index
     if request.post?
+      @log = nil
       @code = params[:code_editor]
       @language = params[:language]
       if (@code.blank?)
@@ -29,16 +30,18 @@ class CodeController < ApplicationController
     Dir.mktmpdir do |dir|
       compiling_hash_info = get_compiled_file(dir, code, language)
 
-      if (compiling_hash_info[:timeout_expired])
+      p compiling_hash_info
+
+      if (compiling_hash_info[:compile_file][:timeout_expired])
         @log = 'Timeout expired (10 seconds >)'
         return
       end
 
-      if (compiling_hash_info[:exitcode] == 0)
-        send_compiled_file(compiling_hash_info[:path])
+      if (compiling_hash_info[:compile_file][:exitcode] == 0)
+        send_compiled_file(compiling_hash_info[:compile_file][:path], compiling_hash_info[:is_compilated_for_windows])
         return
       else
-        @log = "#{compiling_hash_info[:stderr]}. Exit code: #{compiling_hash_info[:exitcode]}"
+        @log = "#{compiling_hash_info[:compile_file][:stderr]}. Exit code: #{compiling_hash_info[:compile_file][:exitcode]}"
       end
     end
   end
@@ -46,22 +49,34 @@ class CodeController < ApplicationController
   # get compiled file, first - make file with source code, then try to compile
   def get_compiled_file(dir, code, language)
     command = nil
-    file_path = make_file_with_source_code(dir, code)
+    is_compiled_for_windows = false;
 
     case language
-      when 'C'
-        command = c_compiling_command(dir, file_path)
       when 'C++'
-        command = cpp_compiling_command(dir, file_path)
+        command = cpp_compiling_command(dir, make_file_with_source_code(dir, code, '.cpp'))
+      when 'C'
+        command = c_compiling_command(dir, make_file_with_source_code(dir, code, '.c'))
+      when 'C++ (Windows)'
+        command = cpp_windows_compiling_command(dir, make_file_with_source_code(dir, code, '.cpp'))
+        is_compiled_for_windows = true
     end
 
-    compile_file(dir, command)
+    {compile_file: compile_file(dir, command), is_compilated_for_windows: is_compiled_for_windows}
   end
 
   # send compiled file
-  def send_compiled_file(compiled_file_path)
+  def send_compiled_file(compiled_file_path, is_compiled_for_windows = false)
+    execute_file_extension = nil
+
+    if (is_compiled_for_windows)
+      compiled_file_path = compiled_file_path + '.exe'
+      execute_file_extension = 'out.exe'
+    else
+      execute_file_extension = 'out'
+    end
+
     File.open("#{compiled_file_path}", 'r') do |f|
-      send_data(f.read, type: 'application/bin', filename: 'out')
+      send_data(f.read, type: 'application/bin', filename: execute_file_extension)
     end
   end
 end

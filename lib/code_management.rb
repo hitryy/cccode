@@ -5,8 +5,8 @@ module CodeManagement
   private
 
   # make file with source code, return full path to this file in unique temp directory
-  def make_file_with_source_code(dir, code)
-    file = File.open("#{dir}/main.c", 'w')
+  def make_file_with_source_code(dir, code, file_extension)
+    file = File.open("#{dir}/main#{file_extension}", 'w')
     file.write code
     file_path = file.path
     file.close
@@ -35,13 +35,18 @@ module CodeManagement
   # TODO: добавить для остальных языков + варианты под линукс/винду
   # COMPILING COMMANDS FOR DIFFERENT LANGUAGES
 
+  # compile command for c++ language
+  def cpp_compiling_command(dir, file_path)
+    "g++ #{file_path} -o #{dir}/out"
+  end
+
   # compile command for c language
   def c_compiling_command(dir, file_path)
     "gcc #{file_path} -o #{dir}/out"
   end
 
-  # compile command for c++ language
-  def cpp_compiling_command(dir, file_path)
-    "g++ #{file_path} -o #{dir}/out"
+  # compile command for cpp (windows) language
+  def cpp_windows_compiling_command(dir, file_path)
+    "i686-w64-mingw32-c++ #{file_path} -o #{dir}/out.exe"
   end
 end

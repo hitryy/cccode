@@ -23,7 +23,7 @@
 window.codemirror_editor = {};
 
 $(function() {
-    $('#code_editor').each(function(){
+    $('#code_editor').each(function () {
         var $el = $(this);
 
         codemirror_editor[$el.attr('id')] = CodeMirror.fromTextArea($el[0],
@@ -31,8 +31,11 @@ $(function() {
                 mode: "text/x-c++src",
                 tabMode: "indent",
                 textWrapping: false,
-                lineNumbers: true
+                lineNumbers: true,
             });
     });
 });
 
+function setDefaultCode() {
+    this.window.codemirror_editor['code_editor'].setValue("#include <iostream>\nusing namespace std;\n\nint main() {\n\tcout << \"Hello, world\";\n\treturn 0;\n}")
+}

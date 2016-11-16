@@ -9,19 +9,19 @@
 <div id="code_area">
   <%= form_tag(root_path, method: 'post') do %>
       <div id="code_area_editor" class="left">
-        <%= text_area_tag 'code_editor', nil %>
+        <%= text_area_tag 'code_editor', @code%>
       </div>
       <div id="code_area_language" class="right">
         <select id="language" name="language" class="similar_width_code_area" onclick="change_language(this)">
           <option disabled selected value> -- select a language -- </option>
-          <%= options_for_select ['C', 'C++']%>
+          <%= options_for_select ['C++', 'C', 'C++ (Windows)']%>
         </select>
       </div>
       <div id="code_area_submit" class="right">
-        <%= submit_tag 'Run', class: 'similar_width_code_area' %>
+        <%= button_tag 'Run', class: 'similar_width_code_area' %>
       </div>
       <div id="code_area_log" class="right">
-        <%= text_area_tag 'log', @log, class: 'similar_width_code_area', readonly: true%>
+        <%= text_area_tag 'log', @log, class: 'similar_width_code_area', readonly: true, rows: 12 %>
       </div>
   <% end %>
 </div>
