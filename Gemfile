@@ -49,3 +49,9 @@ gem 'tzinfo-data', platforms: [:mingw, :mswin, :x64_mingw, :jruby]
 
 # Codemirror - text editor
 gem 'codemirror-rails'
+
+# bootstrap-sass
+gem 'bootstrap-sass'
+
+# materialize-sass
+gem 'materialize-sass'

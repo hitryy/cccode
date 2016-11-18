@@ -1,4 +1,4 @@
-body {
+html {
   background-color: #f2f2f2;
 }
 
@@ -6,26 +6,30 @@ textarea {
   resize: none;
 }
 
+nav {
+  padding-left: 3%;
+}
+
 .CodeMirror {
   height: 400px;
+  width: 100%;
 }
 
-.left {
-  float: left;
-  width: 67%;
-  margin-left: 3%;
-}
-
-.right {
-  float: right;
-  width: 29%;
-  padding-left: 1%;
+.row {
+  background: #f2f2f2;
+  position: relative;
 }
 
 .similar_width_code_area {
-  width: 60%;
+  width: 100%;
 }
 
 #code_area_submit, #code_area_log {
-  margin-top: 5px;
+  margin-top: 2%;
+}
+
+#code_area_language, #code_area_submit, #code_area_log {
+  width: 100%;
+  padding-top: 0;
+  display: inline-block;
 }
