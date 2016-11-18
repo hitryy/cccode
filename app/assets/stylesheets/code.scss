@@ -2,34 +2,33 @@ html {
   background-color: #f2f2f2;
 }
 
-textarea {
-  resize: none;
+body {
+  display: flex;
+  min-height: 100vh;
+  flex-direction: column;
 }
 
 nav {
   padding-left: 3%;
+  padding-right: 3% ;
 }
 
-.CodeMirror {
-  height: 400px;
-  width: 100%;
+main {
+  flex: 1 0 auto;
+}
+
+textarea {
+  resize: none;
 }
 
 .row {
   background: #f2f2f2;
-  position: relative;
 }
 
-.similar_width_code_area {
-  width: 100%;
+.CodeMirror {
+  height: 600px;
 }
 
 #code_area_submit, #code_area_log {
   margin-top: 2%;
-}
-
-#code_area_language, #code_area_submit, #code_area_log {
-  width: 100%;
-  padding-top: 0;
-  display: inline-block;
 }

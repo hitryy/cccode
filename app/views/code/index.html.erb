@@ -1,32 +1,31 @@
 <%= javascript_include_tag 'code.js' %>
-<div class="main">
-  <div>
-    <h1 align="center">Code:</h1>
-    <% if flash[:error] %>
-        <p>
-          <%= flash[:error] %>
-        </p>
+
+<%= render 'navbar' %>
+
+<main>
+  <h3 align="center">Code:</h3>
+  <div id="code_area" class="row">
+    <%= form_tag(root_path, method: 'post') do %>
+        <div id="code_area_editor" class="col s9">
+          <%= text_area_tag 'code_editor', @code%>
+        </div>
+        <div class="col s3 similar_width_code_area">
+          <div id="code_area_language">
+            <select id="language" name="language" class="browser-default", onclick="change_language(this)">
+              <option disabled selected value> -- select a language -- </option>
+              <%= options_for_select ['C++', 'C', 'C++ (Windows)'] %>
+            </select>
+          </div>
+          <div id="code_area_submit">
+            <%= button_tag 'Run', class: 'waves-effect waves-light btn teal', style: 'width: 100%' %>
+          </div>
+          <div id="code_area_log" class="input-field">
+            <%= text_area_tag 'log', @log, class: 'materialize-textarea', placeholder: '...your log here', readonly: true, rows: 12 %>
+          </div>
+        </div>
     <% end %>
-    <div id="code_area" class="row">
-      <%= form_tag(root_path, method: 'post') do %>
-          <div id="code_area_editor" class="left col s9">
-            <%= text_area_tag 'code_editor', @code%>
-          </div>
-          <div class="col s3">
-            <div id="code_area_language" class="right">
-              <select id="language" name="language" class="similar_width_code_area browser-default", onclick="change_language(this)">
-                <option disabled selected value> -- select a language -- </option>
-                <%= options_for_select ['C++', 'C', 'C++ (Windows)'] %>
-              </select>
-            </div>
-            <div id="code_area_submit" class="right">
-              <%= button_tag 'Run', class: 'similar_width_code_area waves-effect waves-light btn teal', style: "" %>
-            </div>
-            <div id="code_area_log" class="right input-field">
-              <%= text_area_tag 'log', @log, class: 'similar_width_code_area materialize-textarea', placeholder: '...your log here', readonly: true, rows: 12 %>
-            </div>
-          </div>
-      <% end %>
-    </div>
   </div>
-</div>
+</main>
+
+<%= render 'footer' %>
+
