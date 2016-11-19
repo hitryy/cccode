@@ -4,22 +4,52 @@ class CodeController < ApplicationController
   attr_accessor :code
   attr_accessor :language
   attr_accessor :log
+  attr_accessor :code_to_display
+  attr_accessor :code_link
+
   # index action
   def index
     if request.post?
       @log = nil
       @code = params[:code_editor]
       @language = params[:language]
+
       if (@code.blank?)
-        #flash[:error] = 'Source code is empty!'
-        #render :index
         @log = 'Source code is empty!'
       elsif (@language.blank?)
-        #flash[:error] = 'Please, choose language!'
         @log = 'Please, choose language!'
       else
-        make_and_send_compiled_file(@code, @language)
+        if (params[:save])
+          save
+        else
+          make_and_send_compiled_file(@code, @language)
+        end
       end
+    end
+  end
+
+  def save
+    date = Time.now
+    unique_string = SecureRandom.hex(4)
+    code_temp = Code.find_by(unique_link: unique_string)
+
+    if (code_temp)
+      while (code_temp[:unique_string] == unique_string)
+        unique_string = SecureRandom.hex(4)
+      end
+    end
+
+    code = Code.new(source_code: @code, unique_link: unique_string, datetime_of_creation: date)
+    code.save
+    @code_link = "localhost:3000/" + code[:unique_link]
+  end
+
+  def show
+    code_temp = Code.find_by(unique_link: params[:id])
+    if (code_temp)
+      @code_to_display = code_temp.source_code
+    else
+      render text: 'code not found'
     end
   end
 
