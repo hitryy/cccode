@@ -28,6 +28,20 @@ class CodeController < ApplicationController
     end
   end
 
+  # show code, based on id (unique_link)
+  def show
+    code_temp = Code.find_by(unique_link: params[:id])
+
+    if (code_temp)
+      @code_to_display = code_temp.source_code
+    else
+      render 'error_code_not_found'
+    end
+  end
+
+  private
+
+  # save code in db
   def save
     date = Time.now
     unique_string = SecureRandom.hex(4)
@@ -41,26 +55,13 @@ class CodeController < ApplicationController
 
     code = Code.new(source_code: @code, unique_link: unique_string, datetime_of_creation: date)
     code.save
-    @code_link = "localhost:3000/" + code[:unique_link]
+    @code_link = code[:unique_link]
   end
-
-  def show
-    code_temp = Code.find_by(unique_link: params[:id])
-    if (code_temp)
-      @code_to_display = code_temp.source_code
-    else
-      render text: 'code not found'
-    end
-  end
-
-  private
 
   # make and send compiled file, or if there are some problems, make flash[:error] and stopping further implementation
   def make_and_send_compiled_file(code, language)
     Dir.mktmpdir do |dir|
       compiling_hash_info = get_compiled_file(dir, code, language)
-
-      p compiling_hash_info
 
       if (compiling_hash_info[:compile_file][:timeout_expired])
         @log = 'Timeout expired (10 seconds >)'

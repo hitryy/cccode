@@ -46,6 +46,7 @@ GEM
       sass (>= 3.3.4)
     builder (3.2.2)
     byebug (9.0.6)
+    clipboard-rails (1.5.15)
     codemirror-rails (5.16.0)
       railties (>= 3.0, < 6.0)
     coffee-rails (4.2.1)
@@ -165,6 +166,7 @@ PLATFORMS
 DEPENDENCIES
   bootstrap-sass
   byebug
+  clipboard-rails
   codemirror-rails
   coffee-rails (~> 4.2)
   jbuilder (~> 2.5)

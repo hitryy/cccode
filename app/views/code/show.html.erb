@@ -1,5 +1,11 @@
 <%= render 'navbar' %>
 
-<%= text_area_tag 'code_editor', @code_to_display %>
+<main>
+  <div class="row">
+    <div id="code_editor_show" class="col s12">
+      <%= text_area_tag 'code_editor', @code_to_display %>
+    </div>
+  </div>
+</main>
 
 <%= render 'footer' %>

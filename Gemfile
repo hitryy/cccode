@@ -55,3 +55,6 @@ gem 'bootstrap-sass'
 
 # materialize-sass
 gem 'materialize-sass'
+
+# clipboard
+gem 'clipboard-rails'
